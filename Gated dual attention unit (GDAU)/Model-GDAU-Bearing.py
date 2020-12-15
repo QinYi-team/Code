@@ -48,7 +48,7 @@ def gdaumodel(gdau_input,gdau_state,n_input, n_hidden, n_output):
     z = tf.sigmoid(tf.matmul(weights['uz'], gdau_input) + tf.matmul(weights['wz'], gdau_state) + weights['bz']) # The output of the update gate
     candidate = tf.tanh(tf.matmul(weights['uh'], gdau_input) + tf.matmul(weights['wh'], tf.multiply(r,gdau_state)) + weights['bh']) # The output of the candidate state
     at = tf.matmul(weights['v'],tf.tanh(tf.matmul(weights['ua1'],gdau_input) + tf.matmul(weights['wa1'],gdau_state)))
-    ut = tf.nn.softmax(at)
+    ut = tf.nn.softmax(at, axis=0)
     h = tf.tanh(tf.multiply(ut,(tf.matmul(weights['ua2'],gdau_input) + tf.matmul(weights['wa2'],gdau_state)))) # The output of the attention gate 1
     a1 = tf.sigmoid(tf.matmul(weights['uaa1'],r) + tf.matmul(weights['waa1'],z) + weights['baa1'])
     a2 = tf.tanh(tf.matmul(weights['uaa2'], r) + tf.matmul(weights['waa2'], z) + weights['baa2'])
